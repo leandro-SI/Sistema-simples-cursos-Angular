@@ -12,13 +12,29 @@ export class CourseService {
 
     constructor(private httpCliente: HttpClient) { }
 
-    retrieveAll(): Observable<Course[]> {
-        return this.httpCliente.get<Course[]>(this.coursesUrl);
+    // retrieveAll(): Observable<Course[]> {
+    //     return this.httpCliente.get<Course[]>(this.coursesUrl);
+    // }
+
+    retrieveAll(): Course[] {
+        return COURSES;
     }
 
-    retrieveById(): Observable<Course> {
-        return this.httpCliente.get<Course>('${this.coursesUrl}/${id}');
+
+    retrieveById(id: number): Course {
+        return COURSES.find((courseIterator: Course) => courseIterator.id === id);
     }
+
+    save(course: Course) {
+        if (course.id) {
+            const index = COURSES.findIndex((courseIterator: Course) => courseIterator.id === course.id);
+            COURSES[index] = course;
+        }
+    }
+
+    // retrieveById(): Observable<Course> {
+    //     return this.httpCliente.get<Course>('${this.coursesUrl}/${id}');
+    // }
 }
 
 var COURSES: Course[] = [
